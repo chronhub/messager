@@ -31,7 +31,7 @@ final class MessagerManager
     /**
      * @var array<string,callable>
      */
-    private array $customerMessager = [];
+    private array $customMessager = [];
 
     public function __construct(private Container $container,
                                 private ?array $config = null)
@@ -43,13 +43,11 @@ final class MessagerManager
     {
         $messagerKey = $this->determineMessagerKey($driver, $type);
 
-        if ($customerMessager = ($this->customerMessager[$messagerKey] ?? null)) {
+        if ($customerMessager = ($this->customMessager[$messagerKey] ?? null)) {
             return $customerMessager($this->container, $this->config);
         }
 
-        $lowType = mb_strtolower($type);
-
-        $config = $this->fromMessager("reporting.$lowType.$driver");
+        $config = $this->fromMessager("reporting.$type.$driver");
 
         if (! is_array($config) || empty($config)) {
             throw new ReportingMessageFailed("Invalid messager configuration with $driver driver and $type type");
@@ -60,24 +58,24 @@ final class MessagerManager
 
     public function command(string $driver = 'default'): Reporter
     {
-        return $this->create($driver, DomainType::COMMAND->name);
+        return $this->create($driver, DomainType::COMMAND->value);
     }
 
     public function event(string $driver = 'default'): Reporter
     {
-        return $this->create($driver, DomainType::EVENT->name);
+        return $this->create($driver, DomainType::EVENT->value);
     }
 
     public function query(string $driver = 'default'): Reporter
     {
-        return $this->create($driver, DomainType::QUERY->name);
+        return $this->create($driver, DomainType::QUERY->value);
     }
 
     public function extends(string $driver, string $type, callable $messager): void
     {
         $messagerKey = $this->determineMessagerKey($driver, $type);
 
-        $this->customerMessager[$messagerKey] = $messager;
+        $this->customMessager[$messagerKey] = $messager;
     }
 
     private function createMessager(string $type, array $config): Reporter
@@ -113,7 +111,7 @@ final class MessagerManager
             $config['handler_method'] ?? null
         );
 
-        $messagerRouter = match (mb_strtolower($type)) {
+        $messagerRouter = match ($type) {
             'command', 'query' => new SingleHandlerRouter($router),
             'event' => new MultipleHandlerRouter($router)
         };
@@ -147,7 +145,7 @@ final class MessagerManager
         $concrete = $config['concrete'] ?? null;
 
         if (null === $concrete) {
-            $concrete = match (mb_strtolower($type)) {
+            $concrete = match ($type) {
                 'command' => ReportCommand::class,
                 'event' => ReportEvent::class,
                 'query' => ReportQuery::class,
@@ -171,7 +169,7 @@ final class MessagerManager
             $strategy = $this->fromMessager('messaging.producer.default');
         }
 
-        if (DomainType::QUERY->name === $type || 'sync' === $strategy) {
+        if (DomainType::QUERY->value === $type || 'sync' === $strategy) {
             return new SyncMessageProducer();
         }
 
@@ -207,18 +205,9 @@ final class MessagerManager
         return new $producer($queue);
     }
 
-    // fixMe
     private function determineMessagerKey(string $driver, string $type): string
     {
-        $found = false;
-
-        foreach (DomainType::cases() as $case) {
-            if ($case->name === $type) {
-                $found = true;
-            }
-        }
-
-        if (! $found) {
+        if (null === DomainType::tryFrom($type)) {
             throw new ReportingMessageFailed("Messager type $type is invalid");
         }
 

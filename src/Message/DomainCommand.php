@@ -8,6 +8,6 @@ abstract class DomainCommand extends Domain
 {
     public function type(): string
     {
-        return DomainType::COMMAND->name;
+        return DomainType::COMMAND->value;
     }
 }

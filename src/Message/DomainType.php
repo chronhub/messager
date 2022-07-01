@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Message;
 
-enum DomainType
+enum DomainType: string
 {
-    case COMMAND;
-    case QUERY;
-    case EVENT;
+    case COMMAND = 'command';
+    case EVENT = 'event';
+    case QUERY = 'query';
 }
