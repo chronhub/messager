@@ -12,20 +12,20 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 use Chronhub\Messager\Message\Factory\MessageFactory;
 use Chronhub\Messager\Message\Serializer\MessageSerializer;
 
-final class MessageServiceProvider extends ServiceProvider implements DeferrableProvider
+final class MessagerServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    private string $reporterPath = __DIR__.'/../config/messager.php';
+    private string $messagerPath = __DIR__.'/../config/messager.php';
 
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([$this->reporterPath => config_path('messager.php')]);
+            $this->publishes([$this->messagerPath => config_path('messager.php')]);
         }
     }
 
     public function register(): void
     {
-        $this->mergeConfigFrom($this->reporterPath, 'reporter');
+        $this->mergeConfigFrom($this->messagerPath, 'messager');
 
         $this->app->singleton(MessagerManager::class);
         //$this->app->alias(ReporterManager::class, Report::SERVICE_NAME);

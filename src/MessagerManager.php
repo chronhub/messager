@@ -23,7 +23,6 @@ use Chronhub\Messager\Message\Producer\SyncMessageProducer;
 use Chronhub\Messager\Message\Serializer\MessageSerializer;
 use Chronhub\Messager\Message\Decorator\ChainMessageDecorators;
 use Chronhub\Messager\Subscribers\ChainMessageDecoratorSubscriber;
-use function in_array;
 use function is_array;
 use function is_string;
 
@@ -208,9 +207,18 @@ final class MessagerManager
         return new $producer($queue);
     }
 
+    // fixMe
     private function determineMessagerKey(string $driver, string $type): string
     {
-        if (! in_array($type, DomainType::cases(), false)) {
+        $found = false;
+
+        foreach (DomainType::cases() as $case) {
+            if ($case->name === $type) {
+                $found = true;
+            }
+        }
+
+        if (! $found) {
             throw new ReportingMessageFailed("Messager type $type is invalid");
         }
 
