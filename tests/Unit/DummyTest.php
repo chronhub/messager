@@ -8,6 +8,11 @@ use Chronhub\Messager\Tests\TestCase;
 
 final class DummyTest extends TestCase
 {
+    /**
+     * @test
+     *
+     * @return void
+     */
     public function it_assert_true(): void
     {
         $this->assertTrue(true);
