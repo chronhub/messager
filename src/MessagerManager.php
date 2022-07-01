@@ -142,9 +142,7 @@ final class MessagerManager
 
     private function messagerInstance(string $type, array $config): Reporter
     {
-        $concrete = $config['concrete'] ?? null;
-
-        if (null === $concrete) {
+        if (null === $concrete = $config['concrete'] ?? null) {
             $concrete = match ($type) {
                 'command' => ReportCommand::class,
                 'event' => ReportEvent::class,
@@ -185,9 +183,7 @@ final class MessagerManager
             return $this->container->get($producer);
         }
 
-        $queue = $config['queue'] ?? null;
-
-        if (null === $queue) {
+        if (null === $queue = $config['queue'] ?? null) {
             $queue = $this->container->make(IlluminateQueue::class);
         }
 
@@ -200,9 +196,9 @@ final class MessagerManager
             );
         }
 
-        $queue = is_string($queue) ? $this->container->make($queue) : $queue;
-
-        return new $producer($queue);
+        return new $producer(
+            is_string($queue) ? $this->container->make($queue) : $queue
+        );
     }
 
     private function determineMessagerKey(string $driver, string $type): string
