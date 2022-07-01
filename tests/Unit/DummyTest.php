@@ -17,4 +17,14 @@ final class DummyTest extends TestCase
     {
         $this->assertTrue(true);
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function it_assert_false(): void
+    {
+        $this->assertFalse(false);
+    }
 }
