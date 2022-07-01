@@ -6,7 +6,7 @@ namespace Chronhub\Messager\Subscribers;
 
 use Chronhub\Messager\Reporter;
 use React\Promise\PromiseInterface;
-use Chronhub\Messager\ReporterPriority;
+use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 
@@ -20,6 +20,6 @@ final class GuardQueryOnDispatch extends GuardQuery
             if ($promise instanceof PromiseInterface) {
                 $this->authorizeQuery($context);
             }
-        }, ReporterPriority::INVOKE_HANDLER->value - 1);
+        }, OnDispatchPriority::INVOKE_HANDLER->value - 1);
     }
 }

@@ -7,7 +7,7 @@ namespace Chronhub\Messager\Subscribers;
 use Chronhub\Messager\Reporter;
 use Chronhub\Messager\Message\Header;
 use Chronhub\Messager\AuthorizeMessage;
-use Chronhub\Messager\ReporterPriority;
+use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Alias\MessageAlias;
@@ -32,6 +32,6 @@ final class GuardCommandRoute implements MessageSubscriber
 
                 throw new UnauthorizedException("Unauthorized for event $eventAlias");
             }
-        }, ReporterPriority::ROUTE->value + 1000);
+        }, OnDispatchPriority::ROUTE->value + 1000);
     }
 }

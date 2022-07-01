@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Chronhub\Messager\Subscribers;
 
 use Chronhub\Messager\Reporter;
-use Chronhub\Messager\ReporterPriority;
+use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 
@@ -19,6 +19,6 @@ final class HandleEvent implements MessageSubscriber
             }
 
             $context->markMessageHandled(true);
-        }, ReporterPriority::INVOKE_HANDLER->value);
+        }, OnDispatchPriority::INVOKE_HANDLER->value);
     }
 }

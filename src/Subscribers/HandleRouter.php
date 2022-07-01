@@ -6,7 +6,7 @@ namespace Chronhub\Messager\Subscribers;
 
 use Chronhub\Messager\Reporter;
 use Chronhub\Messager\Router\Router;
-use Chronhub\Messager\ReporterPriority;
+use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Producer\MessageProducer;
@@ -24,7 +24,7 @@ final class HandleRouter implements MessageSubscriber
             $this->messageProducer->isSync($context->message())
                 ? $this->handleSyncMessage($context)
                 : $this->handleAsyncMessage($context);
-        }, ReporterPriority::ROUTE->value);
+        }, OnDispatchPriority::ROUTE->value);
     }
 
     private function handleSyncMessage(ContextualMessage $context): void
