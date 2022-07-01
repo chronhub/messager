@@ -10,8 +10,9 @@ use Chronhub\Messager\Support\Clock\UniversalSystemClock;
 
 final class DefaultMessageDecorators implements MessageDecorator
 {
-    public function __construct(private ?Clock $clock = new UniversalSystemClock())
+    public function __construct(private ?Clock $clock = null)
     {
+        $this->clock ??= new UniversalSystemClock();
     }
 
     public function decorate(Message $message): Message

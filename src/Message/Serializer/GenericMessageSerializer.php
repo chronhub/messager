@@ -18,8 +18,9 @@ use function is_string;
 final class GenericMessageSerializer implements MessageSerializer
 {
     public function __construct(private Clock $clock,
-                                private ?GenericContentSerializer $contentSerializer = new GenericContentSerializer())
+                                private ?GenericContentSerializer $contentSerializer = null)
     {
+        $this->contentSerializer ??= new GenericContentSerializer();
     }
 
     #[ArrayShape(['headers' => 'array', 'content' => 'array'])]
