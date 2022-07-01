@@ -9,13 +9,13 @@ use Ramsey\Uuid\Uuid;
 use DateTimeImmutable;
 use Chronhub\Messager\ReportCommand;
 use Chronhub\Messager\Message\Header;
+use Chronhub\Messager\Tests\TestCase;
 use Chronhub\Messager\Router\ReporterRouter;
 use Chronhub\Messager\Subscribers\MakeMessage;
 use Chronhub\Messager\Subscribers\HandleRouter;
 use Chronhub\Messager\Tests\Double\SomeCommand;
 use Chronhub\Messager\Subscribers\HandleCommand;
 use Chronhub\Messager\Router\SingleHandlerRouter;
-use Chronhub\Messager\Tests\TestCaseWithProphecy;
 use Chronhub\Messager\Subscribers\NameReporterService;
 use Chronhub\Messager\Message\Alias\AliasFromInflector;
 use Chronhub\Messager\Support\Clock\UniversalPointInTime;
@@ -26,7 +26,7 @@ use Chronhub\Messager\Message\Decorator\DefaultMessageDecorators;
 use Chronhub\Messager\Message\Serializer\GenericMessageSerializer;
 use Chronhub\Messager\Subscribers\ChainMessageDecoratorSubscriber;
 
-final class DispatchCommandTest extends TestCaseWithProphecy
+final class DispatchCommandTest extends TestCase
 {
     /**
      * @test
@@ -63,7 +63,6 @@ final class DispatchCommandTest extends TestCaseWithProphecy
         );
 
         $event = SomeCommand::fromContent(['steph' => 'bug']);
-
         $reporter->publish($event);
 
         $this->assertTrue($messageHandled);
@@ -79,7 +78,5 @@ final class DispatchCommandTest extends TestCaseWithProphecy
             DateTimeImmutable::class,
             UniversalPointInTime::fromString($someCommand->header(Header::EVENT_TIME->value))->dateTime()
         );
-
-        dump($someCommand);
     }
 }
