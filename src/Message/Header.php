@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Message;
 
-// ??stick to interface
-// or do we need values
 enum Header : string
 {
     case EVENT_ID = '__event_id';
