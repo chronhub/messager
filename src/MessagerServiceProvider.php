@@ -6,6 +6,7 @@ namespace Chronhub\Messager;
 
 use Illuminate\Support\ServiceProvider;
 use Chronhub\Messager\Support\Clock\Clock;
+use Chronhub\Messager\Support\Facade\Report;
 use Chronhub\Messager\Message\Alias\MessageAlias;
 use Chronhub\Messager\Support\Facade\AliasMessage;
 use Illuminate\Contracts\Support\DeferrableProvider;
@@ -28,8 +29,7 @@ final class MessagerServiceProvider extends ServiceProvider implements Deferrabl
         $this->mergeConfigFrom($this->messagerPath, 'messager');
 
         $this->app->singleton(MessagerManager::class);
-        //$this->app->alias(ReporterManager::class, Report::SERVICE_NAME);
-        //$this->app->bind(Publish::SERVICE_NAME, Publisher::class);
+        $this->app->alias(MessagerManager::class, Report::SERVICE_NAME);
 
         $config = config('messager');
 
@@ -52,6 +52,7 @@ final class MessagerServiceProvider extends ServiceProvider implements Deferrabl
             MessageSerializer::class,
             MessageAlias::class,
             AliasMessage::SERVICE_NAME,
+            Report::SERVICE_NAME,
         ];
     }
 }
