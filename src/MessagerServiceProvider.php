@@ -12,6 +12,8 @@ use Chronhub\Messager\Support\Facade\AliasMessage;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Chronhub\Messager\Message\Factory\MessageFactory;
 use Chronhub\Messager\Message\Serializer\MessageSerializer;
+use Chronhub\Messager\Support\UniqueIdentifier\UuidGenerator;
+use Chronhub\Messager\Support\UniqueIdentifier\GenerateUuidV4;
 
 final class MessagerServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -30,6 +32,8 @@ final class MessagerServiceProvider extends ServiceProvider implements Deferrabl
 
         $this->app->singleton(MessagerManager::class, DefaultMessagerManager::class);
         $this->app->alias(MessagerManager::class, Report::SERVICE_NAME);
+
+        $this->app->bindIf(UuidGenerator::class, GenerateUuidV4::class);
 
         $config = config('messager');
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Chronhub\Messager\Message\Serializer;
 
 use Generator;
-use Ramsey\Uuid\Uuid;
 use JetBrains\PhpStorm\ArrayShape;
 use Chronhub\Messager\Message\Header;
 use Chronhub\Messager\Message\Content;
@@ -13,11 +12,13 @@ use Chronhub\Messager\Message\Message;
 use Chronhub\Messager\Support\Clock\Clock;
 use Chronhub\Messager\Exceptions\RuntimeException;
 use Chronhub\Messager\Support\Aggregate\AggregateChanged;
+use Chronhub\Messager\Support\UniqueIdentifier\UuidGenerator;
 use function is_string;
 
 final class GenericMessageSerializer implements MessageSerializer
 {
     public function __construct(private Clock $clock,
+                                private UuidGenerator $uuidGenerator,
                                 private ?GenericContentSerializer $contentSerializer = null)
     {
         $this->contentSerializer ??= new GenericContentSerializer();
@@ -57,7 +58,6 @@ final class GenericMessageSerializer implements MessageSerializer
          *      ['headers' => ['__event_type' => 'someFQCN, [...]], 'content' => []]
          *      ['message_name' => 'someFQCN', 'content' => []]
          */
-
         $headers = $payload['headers'] ?? [];
 
         $source = $headers[Header::EVENT_TYPE->value] ?? $payload['message_name'] ?? null;
@@ -87,7 +87,7 @@ final class GenericMessageSerializer implements MessageSerializer
         $eventId = $headers[Header::EVENT_ID->value] ?? null;
 
         if (null === $eventId) {
-            return $headers + [Header::EVENT_ID->value => Uuid::uuid4()->toString()];
+            return $headers + [Header::EVENT_ID->value => $this->uuidGenerator->generate()];
         }
 
         if (! is_string($eventId)) {

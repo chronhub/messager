@@ -19,6 +19,7 @@ use Chronhub\Messager\Message\Alias\AliasFromInflector;
 use Chronhub\Messager\Support\Clock\UniversalSystemClock;
 use Chronhub\Messager\Message\Producer\SyncMessageProducer;
 use Chronhub\Messager\Message\Factory\GenericMessageFactory;
+use Chronhub\Messager\Support\UniqueIdentifier\GenerateUuidV4;
 use Chronhub\Messager\Message\Decorator\DefaultMessageDecorators;
 use Chronhub\Messager\Message\Serializer\GenericMessageSerializer;
 use Chronhub\Messager\Subscribers\ChainMessageDecoratorSubscriber;
@@ -57,7 +58,9 @@ final class DispatchEventTest extends TestCase
 
         $reporter->subscribe(
             new NameReporterService($reporter->name()),
-            new MakeMessage(new GenericMessageFactory(new GenericMessageSerializer(new UniversalSystemClock()))),
+            new MakeMessage(new GenericMessageFactory(
+                    new GenericMessageSerializer(new UniversalSystemClock(), new GenerateUuidV4()))
+            ),
             new ChainMessageDecoratorSubscriber(new DefaultMessageDecorators()),
             new HandleRouter(
                 new MultipleHandlerRouter(
