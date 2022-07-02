@@ -63,7 +63,7 @@ final class GenericMessageSerializer implements MessageSerializer
         $source = $headers[Header::EVENT_TYPE->value] ?? $payload['message_name'] ?? null;
 
         if (null === $source) {
-            throw new RuntimeException('Missing event type header from payload');
+            throw new RuntimeException('Missing event type header/message name from payload');
         }
 
         $event = $this->contentSerializer->unserialize($source, $payload);

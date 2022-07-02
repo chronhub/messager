@@ -52,6 +52,7 @@ final class MessagerServiceProvider extends ServiceProvider implements Deferrabl
     {
         return [
             Clock::class,
+            UuidGenerator::class,
             MessagerManager::class,
             MessageFactory::class,
             MessageSerializer::class,

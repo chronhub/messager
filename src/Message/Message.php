@@ -8,7 +8,6 @@ use Chronhub\Messager\Exceptions\RuntimeException;
 use Chronhub\Messager\Exceptions\InvalidArgumentException;
 use function count;
 
-// ??Envelop
 final class Message
 {
     use HasHeaders;
