@@ -78,7 +78,7 @@ final class GenericMessageSerializer implements MessageSerializer
 
     private function normalizeEventId(array $headers): array
     {
-        $eventId ??= $headers[Header::EVENT_ID->value];
+        $eventId = $headers[Header::EVENT_ID->value] ?? null;
 
         if (null === $eventId) {
             return $headers + [Header::EVENT_ID->value => Uuid::uuid4()->toString()];
@@ -93,7 +93,7 @@ final class GenericMessageSerializer implements MessageSerializer
 
     private function normalizeEventTime(array $headers): array
     {
-        $eventTime ??= $headers[Header::EVENT_TIME->value];
+        $eventTime = $headers[Header::EVENT_TIME->value] ?? null;
 
         if (null === $eventTime) {
             return $headers + [Header::EVENT_TIME->value => $this->clock->fromNow()->toString()];
@@ -109,7 +109,7 @@ final class GenericMessageSerializer implements MessageSerializer
     private function checkAggregateIdAndType(array $headers): array
     {
         if (! isset($headers[Header::AGGREGATE_ID->value], $headers[Header::AGGREGATE_ID_TYPE->value])) {
-            throw new RuntimeException('Missing aggregate id and type');
+            throw new RuntimeException('Missing aggregate id and type headers');
         }
 
         return $headers;

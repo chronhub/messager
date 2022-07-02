@@ -30,7 +30,7 @@ final class LogDomainCommand implements MessageSubscriber
                 return;
             }
 
-            $this->logger->debug('On dispatch to factory array command', [
+            $this->logger->debug('On dispatch to message factory', [
                 'context' => [
                     'message_name' => $this->determineMessageName($message),
                     'message'      => $message,
@@ -52,7 +52,7 @@ final class LogDomainCommand implements MessageSubscriber
                     'message'      => $serializedMessage,
                 ],
             ]);
-        }, OnDispatchPriority::ROUTE->value - 1);
+        }, OnDispatchPriority::ROUTE->value + 1);
 
         $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $this->logger->debug('On dispatch after route', [
@@ -112,6 +112,6 @@ final class LogDomainCommand implements MessageSubscriber
             return $eventType ?? $message->event()::class;
         }
 
-        return $message['headers'][Header::EVENT_TYPE] ?? $message['message_name'] ?? 'Undetermined event type';
+        return $message['headers'][Header::EVENT_TYPE->value] ?? $message['message_name'] ?? 'Undetermined event type';
     }
 }
