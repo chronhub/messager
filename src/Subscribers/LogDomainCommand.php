@@ -39,22 +39,6 @@ final class LogDomainCommand implements MessageSubscriber
         }, OnDispatchPriority::MESSAGE_FACTORY->value + 1);
 
         $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
-            $message = $context->message();
-
-            $serializedMessage = $message->isMessaging()
-                ? $this->messageSerializer->serializeMessage($message)
-                : serialize($message->event());
-
-            $this->logger->debug('On dispatch to route', [
-                'context' => [
-                    'message_name' => $this->determineMessageName($message),
-                    'exception'    => $context->exception(),
-                    'message'      => $serializedMessage,
-                ],
-            ]);
-        }, OnDispatchPriority::ROUTE->value + 1);
-
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $this->logger->debug('On dispatch after route', [
                 'context' => [
                     'message_name' => $this->determineMessageName($context->message()),
