@@ -53,6 +53,7 @@ return [
                 'messaging'      => [
                     'decorators'  => [],
                     'subscribers' => [
+                        \Chronhub\Messager\Subscribers\LogDomainCommand::class,
                         \Chronhub\Messager\Subscribers\HandleCommand::class,
                     ],
                     'producer'    => 'default',

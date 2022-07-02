@@ -28,7 +28,7 @@ final class MessagerServiceProvider extends ServiceProvider implements Deferrabl
     {
         $this->mergeConfigFrom($this->messagerPath, 'messager');
 
-        $this->app->singleton(MessagerManager::class);
+        $this->app->singleton(MessagerManager::class, DefaultMessagerManager::class);
         $this->app->alias(MessagerManager::class, Report::SERVICE_NAME);
 
         $config = config('messager');
@@ -47,6 +47,7 @@ final class MessagerServiceProvider extends ServiceProvider implements Deferrabl
     public function provides(): array
     {
         return [
+            Clock::class,
             MessagerManager::class,
             MessageFactory::class,
             MessageSerializer::class,
