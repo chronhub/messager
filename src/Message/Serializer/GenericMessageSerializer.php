@@ -52,9 +52,15 @@ final class GenericMessageSerializer implements MessageSerializer
 
     public function unserializeContent(array $payload): Generator
     {
-        $headers = $payload['headers'];
+        /**
+         * Unserialize content from:
+         *      ['headers' => ['__event_type' => 'someFQCN, [...]], 'content' => []]
+         *      ['message_name' => 'someFQCN', 'content' => []]
+         */
 
-        $source = $headers[Header::EVENT_TYPE->value] ?? null;
+        $headers = $payload['headers'] ?? [];
+
+        $source = $headers[Header::EVENT_TYPE->value] ?? $payload['message_name'] ?? null;
 
         if (null === $source) {
             throw new RuntimeException('Missing event type header from payload');
@@ -109,7 +115,7 @@ final class GenericMessageSerializer implements MessageSerializer
     private function checkAggregateIdAndType(array $headers): array
     {
         if (! isset($headers[Header::AGGREGATE_ID->value], $headers[Header::AGGREGATE_ID_TYPE->value])) {
-            throw new RuntimeException('Missing aggregate id and type headers');
+            throw new RuntimeException('Missing aggregate id and/or aggregate type headers');
         }
 
         return $headers;
