@@ -18,8 +18,9 @@ use function is_string;
 final class GenericMessageSerializer implements MessageSerializer
 {
     public function __construct(private Clock $clock,
-                                private ?GenericContentSerializer $contentSerializer = new GenericContentSerializer())
+                                private ?GenericContentSerializer $contentSerializer = null)
     {
+        $this->contentSerializer ??= new GenericContentSerializer();
     }
 
     #[ArrayShape(['headers' => 'array', 'content' => 'array'])]
@@ -51,9 +52,15 @@ final class GenericMessageSerializer implements MessageSerializer
 
     public function unserializeContent(array $payload): Generator
     {
-        $headers = $payload['headers'];
+        /**
+         * Unserialize content from:
+         *      ['headers' => ['__event_type' => 'someFQCN, [...]], 'content' => []]
+         *      ['message_name' => 'someFQCN', 'content' => []]
+         */
 
-        $source = $headers[Header::EVENT_TYPE->value] ?? null;
+        $headers = $payload['headers'] ?? [];
+
+        $source = $headers[Header::EVENT_TYPE->value] ?? $payload['message_name'] ?? null;
 
         if (null === $source) {
             throw new RuntimeException('Missing event type header from payload');
@@ -77,7 +84,7 @@ final class GenericMessageSerializer implements MessageSerializer
 
     private function normalizeEventId(array $headers): array
     {
-        $eventId ??= $headers[Header::EVENT_ID->value];
+        $eventId = $headers[Header::EVENT_ID->value] ?? null;
 
         if (null === $eventId) {
             return $headers + [Header::EVENT_ID->value => Uuid::uuid4()->toString()];
@@ -92,7 +99,7 @@ final class GenericMessageSerializer implements MessageSerializer
 
     private function normalizeEventTime(array $headers): array
     {
-        $eventTime ??= $headers[Header::EVENT_TIME->value];
+        $eventTime = $headers[Header::EVENT_TIME->value] ?? null;
 
         if (null === $eventTime) {
             return $headers + [Header::EVENT_TIME->value => $this->clock->fromNow()->toString()];
@@ -108,7 +115,7 @@ final class GenericMessageSerializer implements MessageSerializer
     private function checkAggregateIdAndType(array $headers): array
     {
         if (! isset($headers[Header::AGGREGATE_ID->value], $headers[Header::AGGREGATE_ID_TYPE->value])) {
-            throw new RuntimeException('Missing aggregate id and type');
+            throw new RuntimeException('Missing aggregate id and/or aggregate type headers');
         }
 
         return $headers;

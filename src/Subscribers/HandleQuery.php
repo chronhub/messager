@@ -7,7 +7,7 @@ namespace Chronhub\Messager\Subscribers;
 use Throwable;
 use React\Promise\Deferred;
 use Chronhub\Messager\Reporter;
-use Chronhub\Messager\ReporterPriority;
+use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 
@@ -30,6 +30,6 @@ final class HandleQuery implements MessageSubscriber
                     $context->markMessageHandled(true);
                 }
             }
-        }, ReporterPriority::INVOKE_HANDLER->value);
+        }, OnDispatchPriority::INVOKE_HANDLER->value);
     }
 }

@@ -6,7 +6,7 @@ namespace Chronhub\Messager\Subscribers;
 
 use Chronhub\Messager\Reporter;
 use Chronhub\Messager\Message\Header;
-use Chronhub\Messager\ReporterPriority;
+use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 
@@ -26,6 +26,6 @@ final class NameReporterService implements MessageSubscriber
                     $message->withHeader(Header::REPORTER_NAME->value, $this->reporterServiceName)
                 );
             }
-        }, ReporterPriority::MESSAGE_FACTORY->value - 1);
+        }, OnDispatchPriority::MESSAGE_FACTORY->value - 1);
     }
 }

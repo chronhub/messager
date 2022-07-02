@@ -6,7 +6,7 @@ namespace Chronhub\Messager\Subscribers;
 
 use Chronhub\Messager\Reporter;
 use Chronhub\Messager\Message\Header;
-use Chronhub\Messager\ReporterPriority;
+use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 
@@ -24,6 +24,6 @@ final class HandleCommand implements MessageSubscriber
             if (null !== $messageHandler || true === $context->message()->header(Header::ASYNC_MARKER->value)) {
                 $context->markMessageHandled(true);
             }
-        }, ReporterPriority::INVOKE_HANDLER->value);
+        }, OnDispatchPriority::INVOKE_HANDLER->value);
     }
 }

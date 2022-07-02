@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Chronhub\Messager\Subscribers;
 
 use Chronhub\Messager\Reporter;
-use Chronhub\Messager\ReporterPriority;
+use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Factory\MessageFactory;
@@ -22,6 +22,6 @@ final class MakeMessage implements MessageSubscriber
             $message = $this->factory->createFromMessage($context->pullTransientMessage());
 
             $context->withMessage($message);
-        }, ReporterPriority::MESSAGE_FACTORY->value);
+        }, OnDispatchPriority::MESSAGE_FACTORY->value);
     }
 }

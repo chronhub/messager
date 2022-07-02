@@ -17,8 +17,9 @@ use function get_called_class;
 trait HasReporter
 {
     public function __construct(protected ?string $name = null,
-                                protected ?MessageTracker $tracker = new TrackMessage())
+                                protected ?MessageTracker $tracker = null)
     {
+        $this->tracker ??= new TrackMessage();
     }
 
     protected function publishMessage(ContextualMessage $context): void

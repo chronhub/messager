@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager;
 
-enum ReporterPriority : int
+enum OnDispatchPriority : int
 {
     case MESSAGE_FACTORY = 100000;
     case MESSAGE_DECORATOR = 90000;

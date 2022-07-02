@@ -8,6 +8,6 @@ abstract class DomainQuery extends Domain
 {
     public function type(): string
     {
-        return DomainType::QUERY->name;
+        return DomainType::QUERY->value;
     }
 }

@@ -8,6 +8,6 @@ abstract class DomainEvent extends Domain
 {
     public function type(): string
     {
-        return DomainType::EVENT->name;
+        return DomainType::EVENT->value;
     }
 }

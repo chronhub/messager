@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Chronhub\Messager\Subscribers;
 
 use Chronhub\Messager\Reporter;
-use Chronhub\Messager\ReporterPriority;
+use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Decorator\MessageDecorator;
@@ -22,6 +22,6 @@ final class ChainMessageDecoratorSubscriber implements MessageSubscriber
             $context->withMessage(
                 $this->messageDecorator->decorate($context->message())
             );
-        }, ReporterPriority::MESSAGE_DECORATOR->value);
+        }, OnDispatchPriority::MESSAGE_DECORATOR->value);
     }
 }
