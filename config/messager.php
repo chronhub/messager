@@ -16,12 +16,13 @@ return [
         // default and sync can not be unset
         'producer' => [
             'default'     => 'sync',
-
             'sync'        => true,
+
             'per_message' => [
                 'service' => \Chronhub\Messager\Message\Producer\PerMessageProducer::class,
                 'queue'   => \Chronhub\Messager\Message\Producer\IlluminateQueue::class,
             ],
+
             'async'       => [
                 // your registered service id (queue would not be used)
                 // or the provided one

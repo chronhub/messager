@@ -10,6 +10,6 @@ final class TrackMessage implements MessageTracker
 
     public function newContext(string $event): ContextualMessage
     {
-        return new Topic($event);
+        return new Envelop($event);
     }
 }

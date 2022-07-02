@@ -6,7 +6,7 @@ namespace Chronhub\Messager\Tracker;
 
 use Throwable;
 
-trait HasTopic
+trait HasEnvelop
 {
     protected ?Throwable $exception = null;
 

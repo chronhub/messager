@@ -8,9 +8,9 @@ use Generator;
 use React\Promise\PromiseInterface;
 use Chronhub\Messager\Message\Message;
 
-class Topic implements ContextualMessage
+class Envelop implements ContextualMessage
 {
-    use HasTopic;
+    use HasEnvelop;
 
     private ?Message $message;
 
