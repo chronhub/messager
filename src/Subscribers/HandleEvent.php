@@ -9,11 +9,11 @@ use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 
-final class HandleEvent implements MessageSubscriber
+final class HandleEvent extends AbstractMessageSubscriber
 {
     public function attachToTracker(MessageTracker $tracker): void
     {
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             foreach ($context->messageHandlers() as $messageHandler) {
                 $messageHandler($context->message()->event());
             }

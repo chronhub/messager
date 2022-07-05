@@ -14,7 +14,7 @@ final class GuardQueryOnDispatch extends GuardQuery
 {
     public function attachToTracker(MessageTracker $tracker): void
     {
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $promise = $context->promise();
 
             if ($promise instanceof PromiseInterface) {

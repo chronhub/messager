@@ -11,7 +11,7 @@ use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Producer\MessageProducer;
 
-final class HandleRouter implements MessageSubscriber
+final class HandleRouter extends AbstractMessageSubscriber
 {
     public function __construct(private Router $router,
                                 private MessageProducer $messageProducer)
@@ -20,7 +20,7 @@ final class HandleRouter implements MessageSubscriber
 
     public function attachToTracker(MessageTracker $tracker): void
     {
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $this->messageProducer->isSync($context->message())
                 ? $this->handleSyncMessage($context)
                 : $this->handleAsyncMessage($context);

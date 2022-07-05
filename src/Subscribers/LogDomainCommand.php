@@ -14,7 +14,7 @@ use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Serializer\MessageSerializer;
 use function is_array;
 
-final class LogDomainCommand implements MessageSubscriber
+final class LogDomainCommand extends AbstractMessageSubscriber
 {
     public function __construct(private LoggerInterface $logger,
                                 private MessageSerializer $messageSerializer)
@@ -23,7 +23,7 @@ final class LogDomainCommand implements MessageSubscriber
 
     public function attachToTracker(MessageTracker $tracker): void
     {
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $message = $context->transientMessage();
 
             if (! is_array($message)) {
@@ -38,7 +38,7 @@ final class LogDomainCommand implements MessageSubscriber
             ]);
         }, OnDispatchPriority::MESSAGE_FACTORY->value + 1);
 
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $this->logger->debug('On dispatch after route', [
                 'context' => [
                     'message_name' => $this->determineMessageName($context->message()),
@@ -48,7 +48,7 @@ final class LogDomainCommand implements MessageSubscriber
             ]);
         }, OnDispatchPriority::ROUTE->value - 1);
 
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $message = $context->message();
 
             $serializedMessage = $message->isMessaging()
@@ -65,7 +65,7 @@ final class LogDomainCommand implements MessageSubscriber
             ]);
         }, OnDispatchPriority::INVOKE_HANDLER->value + 1);
 
-        $tracker->listen(Reporter::FINALIZE_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::FINALIZE_EVENT, function (ContextualMessage $context): void {
             $this->logger->debug('On pre finalize message command', [
                 'context' => [
                     'message_name'    => $this->determineMessageName($context->message()),
@@ -76,7 +76,7 @@ final class LogDomainCommand implements MessageSubscriber
             ]);
         }, 100000);
 
-        $tracker->listen(Reporter::FINALIZE_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::FINALIZE_EVENT, function (ContextualMessage $context): void {
             $this->logger->debug('On post finalize message command', [
                 'context' => [
                     'message_name'    => $this->determineMessageName($context->message()),

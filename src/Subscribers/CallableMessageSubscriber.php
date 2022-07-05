@@ -7,7 +7,7 @@ namespace Chronhub\Messager\Subscribers;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 
-final class CallableMessageSubscriber implements MessageSubscriber
+final class CallableMessageSubscriber extends AbstractMessageSubscriber
 {
     /**
      * @var callable
@@ -23,7 +23,7 @@ final class CallableMessageSubscriber implements MessageSubscriber
 
     public function attachToTracker(MessageTracker $tracker): void
     {
-        $tracker->listen($this->event, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen($this->event, function (ContextualMessage $context): void {
             ($this->callback)($context);
         }, $this->priority);
     }

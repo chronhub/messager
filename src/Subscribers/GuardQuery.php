@@ -10,7 +10,7 @@ use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Alias\MessageAlias;
 use Chronhub\Messager\Exceptions\UnauthorizedException;
 
-abstract class GuardQuery implements MessageSubscriber
+abstract class GuardQuery extends AbstractMessageSubscriber
 {
     public function __construct(private AuthorizeMessage $authorizationService,
                                 private MessageAlias $messageAlias)

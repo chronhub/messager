@@ -13,7 +13,7 @@ final class GuardQueryOnFinalize extends GuardQuery
 {
     public function attachToTracker(MessageTracker $tracker): void
     {
-        $tracker->listen(Reporter::FINALIZE_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::FINALIZE_EVENT, function (ContextualMessage $context): void {
             $promise = $context->promise();
 
             if ($promise instanceof PromiseInterface) {

@@ -10,7 +10,7 @@ use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 
-final class NameReporterService implements MessageSubscriber
+final class NameReporterService extends AbstractMessageSubscriber
 {
     public function __construct(private string $reporterServiceName)
     {
@@ -18,7 +18,7 @@ final class NameReporterService implements MessageSubscriber
 
     public function attachToTracker(MessageTracker $tracker): void
     {
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $message = $context->message();
 
             if ($message->hasNot(Header::REPORTER_NAME->value)) {

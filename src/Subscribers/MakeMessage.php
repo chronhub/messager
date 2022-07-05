@@ -10,7 +10,7 @@ use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Factory\MessageFactory;
 
-final class MakeMessage implements MessageSubscriber
+final class MakeMessage extends AbstractMessageSubscriber
 {
     public function __construct(private MessageFactory $factory)
     {
@@ -18,7 +18,7 @@ final class MakeMessage implements MessageSubscriber
 
     public function attachToTracker(MessageTracker $tracker): void
     {
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $message = $this->factory->createFromMessage($context->pullTransientMessage());
 
             $context->withMessage($message);

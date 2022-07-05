@@ -9,4 +9,6 @@ use Chronhub\Messager\Tracker\MessageTracker;
 interface MessageSubscriber extends Subscriber
 {
     public function attachToTracker(MessageTracker $tracker): void;
+
+    public function detachFromTracker(MessageTracker $tracker): void;
 }

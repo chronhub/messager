@@ -10,7 +10,7 @@ use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Decorator\MessageDecorator;
 
-final class ChainMessageDecoratorSubscriber implements MessageSubscriber
+final class ChainMessageDecoratorSubscriber extends AbstractMessageSubscriber
 {
     public function __construct(private MessageDecorator $messageDecorator)
     {
@@ -18,7 +18,7 @@ final class ChainMessageDecoratorSubscriber implements MessageSubscriber
 
     public function attachToTracker(MessageTracker $tracker): void
     {
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $context->withMessage(
                 $this->messageDecorator->decorate($context->message())
             );

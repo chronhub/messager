@@ -13,7 +13,7 @@ use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Alias\MessageAlias;
 use Chronhub\Messager\Exceptions\UnauthorizedException;
 
-final class GuardCommandRoute implements MessageSubscriber
+final class GuardCommandRoute extends AbstractMessageSubscriber
 {
     public function __construct(private AuthorizeMessage $authorizationService,
                                 private MessageAlias $messageAlias)
@@ -22,7 +22,7 @@ final class GuardCommandRoute implements MessageSubscriber
 
     public function attachToTracker(MessageTracker $tracker): void
     {
-        $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
+        $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {
             $message = $context->message();
 
             $eventAlias = $this->messageAlias->classToAlias($message->header(Header::EVENT_TYPE->value));
