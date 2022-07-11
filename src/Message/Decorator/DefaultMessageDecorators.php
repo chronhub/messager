@@ -12,7 +12,7 @@ final class DefaultMessageDecorators implements MessageDecorator
 {
     public function __construct(private ?Clock $clock = null)
     {
-        $this->clock ??= new UniversalSystemClock();
+        $this->clock = $clock ?? new UniversalSystemClock();
     }
 
     public function decorate(Message $message): Message
