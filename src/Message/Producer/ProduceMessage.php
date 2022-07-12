@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Message\Producer;
 
+use Chronhub\Messager\Message\Domain;
 use Chronhub\Messager\Message\Header;
-use Chronhub\Messager\Message\Content;
 use Chronhub\Messager\Message\Message;
 use Chronhub\Messager\Exceptions\RuntimeException;
 
@@ -26,7 +26,7 @@ abstract class ProduceMessage implements MessageProducer
 
     public function isSync(Message $message): bool
     {
-        if (! $message->event() instanceof Content) {
+        if (! $message->event() instanceof Domain) {
             return true;
         }
 

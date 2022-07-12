@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Message;
 
-interface Messaging extends Content
+interface Messaging
 {
+    public static function fromContent(array $content): Domain;
+
+    public function toContent(): array;
+
     public function withHeaders(array $headers): Domain;
 
     public function withHeader(string $header, mixed $value): Domain;

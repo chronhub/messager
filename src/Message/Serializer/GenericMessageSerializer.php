@@ -6,8 +6,8 @@ namespace Chronhub\Messager\Message\Serializer;
 
 use Generator;
 use JetBrains\PhpStorm\ArrayShape;
+use Chronhub\Messager\Message\Domain;
 use Chronhub\Messager\Message\Header;
-use Chronhub\Messager\Message\Content;
 use Chronhub\Messager\Message\Message;
 use Chronhub\Messager\Support\Clock\Clock;
 use Chronhub\Messager\Exceptions\RuntimeException;
@@ -21,7 +21,7 @@ final class GenericMessageSerializer implements MessageSerializer
                                 private UuidGenerator $uuidGenerator,
                                 private ?GenericContentSerializer $contentSerializer = null)
     {
-        $this->contentSerializer ??= new GenericContentSerializer();
+        $this->contentSerializer = $contentSerializer ?: new GenericContentSerializer();
     }
 
     #[ArrayShape(['headers' => 'array', 'content' => 'array'])]
@@ -30,8 +30,8 @@ final class GenericMessageSerializer implements MessageSerializer
         $event = $message->event();
         $headers = $message->headers();
 
-        if (! $event instanceof Content) {
-            throw new RuntimeException('Message event must be an instance of Content to be serialized');
+        if (! $event instanceof Domain) {
+            throw new RuntimeException('Message event must be an instance of Domain to be serialized');
         }
 
         $headers = $this->normalizeEventId($headers);

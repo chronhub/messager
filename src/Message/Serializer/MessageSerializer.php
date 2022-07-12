@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Message\Serializer;
 
-use Chronhub\Messager\Message\Content;
-use Chronhub\Messager\Message\DomainEvent;
 use Generator;
 use Chronhub\Messager\Message\Message;
+use Chronhub\Messager\Message\DomainEvent;
 
 interface MessageSerializer
 {
@@ -15,7 +14,7 @@ interface MessageSerializer
 
     /**
      * @param  array  $payload
-     * @return Generator<DomainEvent|Content>
+     * @return Generator<DomainEvent>
      */
     public function unserializeContent(array $payload): Generator;
 }

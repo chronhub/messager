@@ -19,6 +19,7 @@ use Chronhub\Messager\Subscribers\NameReporterService;
 use Chronhub\Messager\Message\Producer\IlluminateQueue;
 use Chronhub\Messager\Message\Producer\MessageProducer;
 use Chronhub\Messager\Exceptions\ReportingMessageFailed;
+use Chronhub\Messager\Exceptions\InvalidArgumentException;
 use Chronhub\Messager\Message\Producer\SyncMessageProducer;
 use Chronhub\Messager\Message\Serializer\MessageSerializer;
 use Chronhub\Messager\Message\Decorator\ChainMessageDecorators;
@@ -113,7 +114,8 @@ final class DefaultMessagerManager implements MessagerManager
 
         $messagerRouter = match ($type) {
             'command', 'query' => new SingleHandlerRouter($router),
-            'event' => new MultipleHandlerRouter($router)
+            'event' => new MultipleHandlerRouter($router),
+            default => throw new InvalidArgumentException("Invalid message type $type")
         };
 
         $messageProducer = $this->createMessageProducer($type, $config['messaging']['producer'] ?? null);
@@ -147,6 +149,7 @@ final class DefaultMessagerManager implements MessagerManager
                 'command' => ReportCommand::class,
                 'event' => ReportEvent::class,
                 'query' => ReportQuery::class,
+                default => throw new InvalidArgumentException("Invalid message type $type")
             };
         }
 
