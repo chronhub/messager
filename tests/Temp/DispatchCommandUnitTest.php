@@ -9,7 +9,7 @@ use Ramsey\Uuid\Uuid;
 use DateTimeImmutable;
 use Chronhub\Messager\ReportCommand;
 use Chronhub\Messager\Message\Header;
-use Chronhub\Messager\Tests\TestCase;
+use Chronhub\Messager\Tests\UnitTestCase;
 use Chronhub\Messager\Router\ReporterRouter;
 use Chronhub\Messager\Subscribers\MakeMessage;
 use Chronhub\Messager\Subscribers\HandleRouter;
@@ -27,7 +27,7 @@ use Chronhub\Messager\Message\Decorator\DefaultMessageDecorators;
 use Chronhub\Messager\Message\Serializer\GenericMessageSerializer;
 use Chronhub\Messager\Subscribers\ChainMessageDecoratorSubscriber;
 
-final class DispatchCommandTest extends TestCase
+final class DispatchCommandUnitTest extends UnitTestCase
 {
     /**
      * @test

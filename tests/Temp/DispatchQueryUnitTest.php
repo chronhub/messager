@@ -8,7 +8,7 @@ use Throwable;
 use React\Promise\Deferred;
 use Chronhub\Messager\ReportQuery;
 use React\Promise\PromiseInterface;
-use Chronhub\Messager\Tests\TestCase;
+use Chronhub\Messager\Tests\UnitTestCase;
 use Chronhub\Messager\Router\ReporterRouter;
 use Chronhub\Messager\Support\HandlePromise;
 use Chronhub\Messager\Tests\Double\SomeQuery;
@@ -26,7 +26,7 @@ use Chronhub\Messager\Message\Decorator\DefaultMessageDecorators;
 use Chronhub\Messager\Message\Serializer\GenericMessageSerializer;
 use Chronhub\Messager\Subscribers\ChainMessageDecoratorSubscriber;
 
-final class DispatchQueryTest extends TestCase
+final class DispatchQueryUnitTest extends UnitTestCase
 {
     use HandlePromise;
 

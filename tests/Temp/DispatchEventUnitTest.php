@@ -6,7 +6,7 @@ namespace Chronhub\Messager\Tests\Temp;
 
 use Throwable;
 use Chronhub\Messager\ReportEvent;
-use Chronhub\Messager\Tests\TestCase;
+use Chronhub\Messager\Tests\UnitTestCase;
 use Chronhub\Messager\Message\DomainEvent;
 use Chronhub\Messager\Router\ReporterRouter;
 use Chronhub\Messager\Tests\Double\SomeEvent;
@@ -24,7 +24,7 @@ use Chronhub\Messager\Message\Decorator\DefaultMessageDecorators;
 use Chronhub\Messager\Message\Serializer\GenericMessageSerializer;
 use Chronhub\Messager\Subscribers\ChainMessageDecoratorSubscriber;
 
-final class DispatchEventTest extends TestCase
+final class DispatchEventUnitTest extends UnitTestCase
 {
     /**
      * @test

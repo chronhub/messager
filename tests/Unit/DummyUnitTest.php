@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Tests\Unit;
 
-use Chronhub\Messager\Tests\TestCase;
+use Chronhub\Messager\Tests\UnitTestCase;
 
-final class DummyTest extends TestCase
+final class DummyUnitTest extends UnitTestCase
 {
     /**
      * @test
