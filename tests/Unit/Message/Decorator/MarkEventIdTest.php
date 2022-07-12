@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-
 namespace Chronhub\Messager\Tests\Unit\Message\Decorator;
 
-use Chronhub\Messager\Message\Decorator\MarkEventId;
 use Chronhub\Messager\Message\Header;
 use Chronhub\Messager\Message\Message;
-use Chronhub\Messager\Support\UniqueIdentifier\GenerateUuidV4;
-use Chronhub\Messager\Tests\Double\SomeCommand;
 use Chronhub\Messager\Tests\UnitTestCase;
+use Chronhub\Messager\Tests\Double\SomeCommand;
+use Chronhub\Messager\Message\Decorator\MarkEventId;
+use Chronhub\Messager\Support\UniqueIdentifier\GenerateUuidV4;
 
 final class MarkEventIdTest extends UnitTestCase
 {
