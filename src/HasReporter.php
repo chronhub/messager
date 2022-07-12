@@ -19,7 +19,7 @@ trait HasReporter
     public function __construct(protected ?string $name = null,
                                 protected ?MessageTracker $tracker = null)
     {
-        $this->tracker ??= new TrackMessage();
+        $this->tracker = $tracker ?: new TrackMessage();
     }
 
     protected function publishMessage(ContextualMessage $context): void
