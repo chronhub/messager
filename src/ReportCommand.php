@@ -6,7 +6,7 @@ namespace Chronhub\Messager;
 
 use Throwable;
 
-final class ReportCommand implements Reporter
+class ReportCommand implements Reporter
 {
     use HasReporter;
 

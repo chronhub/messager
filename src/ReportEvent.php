@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager;
 
-final class ReportEvent implements Reporter
+class ReportEvent implements Reporter
 {
     use HasReporter;
 

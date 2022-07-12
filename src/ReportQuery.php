@@ -6,7 +6,7 @@ namespace Chronhub\Messager;
 
 use React\Promise\PromiseInterface;
 
-final class ReportQuery implements Reporter
+class ReportQuery implements Reporter
 {
     use HasReporter;
 
