@@ -24,7 +24,7 @@ return [
             ],
 
             'async'       => [
-                // your registered service id (queue would not be used)
+                // your registered service id (next queue would not be used)
                 // or the provided one
                 'service' => \Chronhub\Messager\Message\Producer\AsyncAllMessageProducer::class,
 
