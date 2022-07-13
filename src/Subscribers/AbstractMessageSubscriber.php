@@ -19,5 +19,7 @@ abstract class AbstractMessageSubscriber implements MessageSubscriber
         foreach ($this->listeners as $listener) {
             $tracker->forget($listener);
         }
+
+        $this->listeners = [];
     }
 }
