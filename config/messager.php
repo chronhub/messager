@@ -5,6 +5,11 @@ declare(strict_types=1);
 return [
     'clock' => \Chronhub\Messager\Support\Clock\UniversalSystemClock::class,
 
+    /**
+     * @see \Chronhub\Messager\Support\UniqueIdentifier\UuidGenerator
+     */
+    'unique_id' => \Chronhub\Messager\Support\UniqueIdentifier\GenerateUuidV4::class,
+
     'messaging' => [
         'factory'    => \Chronhub\Messager\Message\Factory\GenericMessageFactory::class,
         'serializer' => \Chronhub\Messager\Message\Serializer\GenericMessageSerializer::class,
@@ -13,7 +18,6 @@ return [
             \Chronhub\Messager\Message\Decorator\DefaultMessageDecorators::class,
         ],
 
-        // default and sync can not be unset
         'producer' => [
             'default' => 'sync',
             'sync'    => true,

@@ -33,11 +33,13 @@ final class MessagerServiceProvider extends ServiceProvider implements Deferrabl
         $this->app->singleton(MessagerManager::class, DefaultMessagerManager::class);
         $this->app->alias(MessagerManager::class, Report::SERVICE_NAME);
 
-        $this->app->bindIf(UuidGenerator::class, GenerateUuidV4::class);
-
         $config = config('messager');
 
-        $this->app->bind(Clock::class, $config['clock']);
+        if(null !== $uuidGenerator = ( $config['uniqueId'] ?? null)){
+            $this->app->bind(UuidGenerator::class, fn(): UuidGenerator => $this->app->make($uuidGenerator));
+        }
+
+        $this->app->bindIf(Clock::class, $config['clock']);
 
         $message = $config['messaging'];
 
