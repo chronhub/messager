@@ -22,7 +22,7 @@ final class MessageJob
     }
 
     /**
-     * @param  Container  $container
+     * @param  Container $container
      * @return void
      *
      * @throws BindingResolutionException

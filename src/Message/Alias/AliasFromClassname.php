@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Chronhub\Messager\Message\Alias;
 
 use Chronhub\Messager\Exceptions\InvalidArgumentException;
+use function class_exists;
 
 final class AliasFromClassname implements MessageAlias
 {

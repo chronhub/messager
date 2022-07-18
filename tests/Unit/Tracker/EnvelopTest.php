@@ -12,6 +12,7 @@ use Chronhub\Messager\Message\Message;
 use Chronhub\Messager\Tracker\Envelop;
 use Chronhub\Messager\Tests\UnitTestCase;
 use Chronhub\Messager\Tests\Double\SomeCommand;
+use function iterator_to_array;
 
 final class EnvelopTest extends UnitTestCase
 {

@@ -6,6 +6,7 @@ namespace Chronhub\Messager\Message\Alias;
 
 use Illuminate\Support\Str;
 use Chronhub\Messager\Exceptions\InvalidArgumentException;
+use function class_exists;
 
 final class AliasFromInflector implements MessageAlias
 {

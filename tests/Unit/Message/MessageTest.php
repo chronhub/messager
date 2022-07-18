@@ -23,7 +23,7 @@ class MessageTest extends TestCaseWithProphecy
      * @test
      * @dataProvider provideEventDomain
      *
-     * @param  Domain  $domain
+     * @param  Domain $domain
      * @return void
      */
     public function it_can_be_constructed_with_domain_message(Domain $domain): void
@@ -41,7 +41,7 @@ class MessageTest extends TestCaseWithProphecy
      * @test
      * @dataProvider provideEventObjects
      *
-     * @param  object  $object
+     * @param  object $object
      * @return void
      */
     public function it_can_be_constructed_with_naked_object(object $object): void

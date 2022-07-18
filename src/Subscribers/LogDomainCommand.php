@@ -13,6 +13,8 @@ use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Serializer\MessageSerializer;
 use function is_array;
+use function serialize;
+use function iterator_count;
 
 final class LogDomainCommand extends AbstractMessageSubscriber
 {
@@ -70,7 +72,7 @@ final class LogDomainCommand extends AbstractMessageSubscriber
                 'context' => [
                     'message_name'    => $this->determineMessageName($context->message()),
                     'message_handled' => $context->isMessageHandled(),
-                    'async_marker' => $context->message()->header(Header::ASYNC_MARKER->value),
+                    'async_marker'    => $context->message()->header(Header::ASYNC_MARKER->value),
                     'exception'       => $context->exception(),
                 ],
             ]);
@@ -81,7 +83,7 @@ final class LogDomainCommand extends AbstractMessageSubscriber
                 'context' => [
                     'message_name'    => $this->determineMessageName($context->message()),
                     'message_handled' => $context->isMessageHandled(),
-                    'async_marker' => $context->message()->header(Header::ASYNC_MARKER->value),
+                    'async_marker'    => $context->message()->header(Header::ASYNC_MARKER->value),
                     'exception'       => $context->exception(),
                 ],
             ]);

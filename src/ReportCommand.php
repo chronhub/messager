@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Chronhub\Messager;
 
 use Throwable;
+use function array_shift;
 
 class ReportCommand implements Reporter
 {

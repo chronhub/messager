@@ -10,6 +10,7 @@ use Chronhub\Messager\Tests\UnitTestCase;
 use Chronhub\Messager\Tracker\TrackMessage;
 use Chronhub\Messager\Tests\Double\SomeEvent;
 use Chronhub\Messager\Subscribers\HandleEvent;
+use function iterator_to_array;
 
 final class HandleEventTest extends UnitTestCase
 {

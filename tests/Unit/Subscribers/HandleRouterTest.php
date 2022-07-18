@@ -15,6 +15,7 @@ use Chronhub\Messager\Subscribers\HandleRouter;
 use Chronhub\Messager\Tests\Double\SomeCommand;
 use Chronhub\Messager\Tests\TestCaseWithProphecy;
 use Chronhub\Messager\Message\Producer\MessageProducer;
+use function iterator_to_array;
 
 final class HandleRouterTest extends TestCaseWithProphecy
 {

@@ -8,6 +8,7 @@ use Chronhub\Messager\Message\Domain;
 use Chronhub\Messager\Message\Header;
 use Chronhub\Messager\Exceptions\RuntimeException;
 use Chronhub\Messager\Support\Aggregate\AggregateChanged;
+use function is_subclass_of;
 
 final class GenericContentSerializer
 {

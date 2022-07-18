@@ -19,6 +19,7 @@ use Chronhub\Messager\Tests\Double\SomeStringMessage;
 use Chronhub\Messager\Exceptions\MessageDispatchFailed;
 use Chronhub\Messager\Subscribers\CallableMessageSubscriber;
 use function get_class;
+use function array_shift;
 
 final class ReportCommandTest extends UnitTestCase
 {

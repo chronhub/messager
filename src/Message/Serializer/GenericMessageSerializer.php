@@ -14,6 +14,7 @@ use Chronhub\Messager\Exceptions\RuntimeException;
 use Chronhub\Messager\Support\Aggregate\AggregateChanged;
 use Chronhub\Messager\Support\UniqueIdentifier\UuidGenerator;
 use function is_string;
+use function is_subclass_of;
 
 final class GenericMessageSerializer implements MessageSerializer
 {

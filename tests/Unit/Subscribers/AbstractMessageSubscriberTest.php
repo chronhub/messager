@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Chronhub\Messager\Tests\Unit\Subscribers;
 
 use Chronhub\Messager\Tests\UnitTestCase;
+use Chronhub\Messager\Tracker\TrackMessage;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Subscribers\AbstractMessageSubscriber;
-use Chronhub\Messager\Tracker\TrackMessage;
 
 final class AbstractMessageSubscriberTest extends UnitTestCase
 {
@@ -37,8 +37,8 @@ final class AbstractMessageSubscriberTest extends UnitTestCase
         {
             public function attachToTracker(MessageTracker $tracker): void
             {
-               $this->listeners[] = $tracker->listen('foo', function (): void {});
-               $this->listeners[] = $tracker->listen('foo', function (): void {});
+                $this->listeners[] = $tracker->listen('foo', function (): void {});
+                $this->listeners[] = $tracker->listen('foo', function (): void {});
             }
 
             public function getListeners(): array

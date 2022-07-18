@@ -171,7 +171,7 @@ final class GenericMessageSerializerTest extends TestCaseWithProphecy
             Header::INTERNAL_POSITION->value => 1,
             Header::EVENT_TYPE->value        => $eventClass,
             Header::EVENT_ID->value          => $eventId,
-            Header::EVENT_TIME->value       => $eventTime,
+            Header::EVENT_TIME->value        => $eventTime,
         ];
 
         $content = ['name' => 'steph'];

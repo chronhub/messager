@@ -14,7 +14,7 @@ interface Reporter
     public const FINALIZE_EVENT = 'finalize_event';
 
     /**
-     * @param  object|array  $message
+     * @param  object|array          $message
      * @return void|PromiseInterface
      */
     public function publish(object|array $message);

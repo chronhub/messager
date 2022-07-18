@@ -25,7 +25,9 @@ use Chronhub\Messager\Message\Serializer\MessageSerializer;
 use Chronhub\Messager\Message\Decorator\ChainMessageDecorators;
 use Chronhub\Messager\Subscribers\ChainMessageDecoratorSubscriber;
 use function is_array;
+use function array_map;
 use function is_string;
+use function is_subclass_of;
 
 final class DefaultMessagerManager implements MessagerManager
 {
@@ -147,9 +149,9 @@ final class DefaultMessagerManager implements MessagerManager
         if (null === $concrete = $config['concrete'] ?? null) {
             $concrete = match ($type) {
                 'command' => ReportCommand::class,
-                'event' => ReportEvent::class,
-                'query' => ReportQuery::class,
-                default => throw new InvalidArgumentException("Invalid message type $type")
+                'event'   => ReportEvent::class,
+                'query'   => ReportQuery::class,
+                default   => throw new InvalidArgumentException("Invalid message type $type")
             };
         }
 

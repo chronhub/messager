@@ -15,15 +15,15 @@ return [
 
         // default and sync can not be unset
         'producer' => [
-            'default'     => 'sync',
-            'sync'        => true,
+            'default' => 'sync',
+            'sync'    => true,
 
             'per_message' => [
                 'service' => \Chronhub\Messager\Message\Producer\PerMessageProducer::class,
                 'queue'   => \Chronhub\Messager\Message\Producer\IlluminateQueue::class,
             ],
 
-            'async'       => [
+            'async' => [
                 // your registered service id (next queue would not be used)
                 // or the provided one
                 'service' => \Chronhub\Messager\Message\Producer\AsyncAllMessageProducer::class,
@@ -31,7 +31,7 @@ return [
                 // default illuminate queue / nullable
                 // or service id
                 // or array['connection' => 'my_con , 'queue' => 'my_queue' ]
-                'queue'   => \Chronhub\Messager\Message\Producer\IlluminateQueue::class,
+                'queue' => \Chronhub\Messager\Message\Producer\IlluminateQueue::class,
             ],
         ],
 
@@ -57,16 +57,16 @@ return [
                         \Chronhub\Messager\Subscribers\LogDomainCommand::class,
                         \Chronhub\Messager\Subscribers\HandleCommand::class,
                     ],
-                    'producer'    => 'default',
+                    'producer' => 'default',
                 ],
-                'map'            => [],
+                'map' => [],
             ],
         ],
 
         /*
          * Reporter event
          */
-        'event'   => [
+        'event' => [
             'default' => [
                 'service_id'     => null,
                 'concrete'       => null,
@@ -77,16 +77,16 @@ return [
                     'subscribers' => [
                         \Chronhub\Messager\Subscribers\HandleEvent::class,
                     ],
-                    'producer'    => 'default',
+                    'producer' => 'default',
                 ],
-                'map'            => [],
+                'map' => [],
             ],
         ],
 
         /*
          * Reporter query
          */
-        'query'   => [
+        'query' => [
             'default' => [
                 'service_id'     => null,
                 'concrete'       => null,
@@ -97,9 +97,9 @@ return [
                     'subscribers' => [
                         \Chronhub\Messager\Subscribers\HandleQuery::class,
                     ],
-                    'producer'    => 'default',
+                    'producer' => 'default',
                 ],
-                'map'            => [],
+                'map' => [],
             ],
         ],
     ],

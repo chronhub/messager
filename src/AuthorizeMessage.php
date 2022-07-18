@@ -10,9 +10,9 @@ use Chronhub\Messager\Exceptions\UnauthorizedException;
 interface AuthorizeMessage
 {
     /**
-     * @param  string  $event
-     * @param  Message  $message
-     * @param  mixed|null  $context
+     * @param  string     $event
+     * @param  Message    $message
+     * @param  mixed|null $context
      * @return bool
      *
      * @throws UnauthorizedException
@@ -20,9 +20,9 @@ interface AuthorizeMessage
     public function isGranted(string $event, Message $message, mixed $context = null): bool;
 
     /**
-     * @param  string  $event
-     * @param  Message  $message
-     * @param  mixed|null  $context
+     * @param  string     $event
+     * @param  Message    $message
+     * @param  mixed|null $context
      * @return bool
      *
      * @throws UnauthorizedException

@@ -13,7 +13,7 @@ interface MessageSerializer
     public function serializeMessage(Message $message): array;
 
     /**
-     * @param  array  $payload
+     * @param  array             $payload
      * @return Generator<Domain>
      */
     public function unserializeContent(array $payload): Generator;

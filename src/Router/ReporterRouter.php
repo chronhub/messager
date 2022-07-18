@@ -13,6 +13,7 @@ use Chronhub\Messager\Exceptions\ReportingMessageFailed;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use function is_string;
 use function is_callable;
+use function method_exists;
 
 final class ReporterRouter implements Router
 {

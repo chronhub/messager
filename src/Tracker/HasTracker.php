@@ -55,7 +55,7 @@ trait HasTracker
         $currentEvent = $context->currentEvent();
 
         $this->listeners
-            ->filter(fn (Listener $subscriber) => $currentEvent === $subscriber->eventName())
+            ->filter(fn (Listener $subscriber)          => $currentEvent === $subscriber->eventName())
             ->sortByDesc(fn (Listener $subscriber): int => $subscriber->priority(), SORT_NUMERIC)
             ->each(function (Listener $listener) use ($context, $callback): bool {
                 $result = $this->handleSubscriber($listener, $context, $callback);
