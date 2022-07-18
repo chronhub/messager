@@ -18,11 +18,12 @@ use function is_subclass_of;
 
 final class GenericMessageSerializer implements MessageSerializer
 {
+    private GenericContentSerializer $contentSerializer;
+
     public function __construct(private Clock $clock,
-                                private UuidGenerator $uuidGenerator,
-                                private ?GenericContentSerializer $contentSerializer = null)
+                                private UuidGenerator $uuidGenerator)
     {
-        $this->contentSerializer = $contentSerializer ?: new GenericContentSerializer();
+        $this->contentSerializer = new GenericContentSerializer();
     }
 
     #[ArrayShape(['headers' => 'array', 'content' => 'array'])]
