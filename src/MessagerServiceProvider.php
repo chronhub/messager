@@ -13,7 +13,6 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 use Chronhub\Messager\Message\Factory\MessageFactory;
 use Chronhub\Messager\Message\Serializer\MessageSerializer;
 use Chronhub\Messager\Support\UniqueIdentifier\UuidGenerator;
-use Chronhub\Messager\Support\UniqueIdentifier\GenerateUuidV4;
 
 final class MessagerServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -35,8 +34,8 @@ final class MessagerServiceProvider extends ServiceProvider implements Deferrabl
 
         $config = config('messager');
 
-        if(null !== $uuidGenerator = ( $config['uniqueId'] ?? null)){
-            $this->app->bind(UuidGenerator::class, fn(): UuidGenerator => $this->app->make($uuidGenerator));
+        if (null !== $uuidGenerator = ($config['unique_id'] ?? null)) {
+            $this->app->bind(UuidGenerator::class, fn (): UuidGenerator => $this->app->make($uuidGenerator));
         }
 
         $this->app->bindIf(Clock::class, $config['clock']);
