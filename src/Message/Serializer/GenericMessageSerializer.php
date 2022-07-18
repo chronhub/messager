@@ -57,7 +57,7 @@ final class GenericMessageSerializer implements MessageSerializer
     {
         /**
          * Unserialize content from:
-         *      ['headers' => ['__event_type' => 'someFQCN, [...]], 'content' => []]
+         *      ['headers' => ['__event_type' => 'someFQCN', [...]], 'content' => []]
          *      ['message_name' => 'someFQCN', 'content' => []]
          */
         $headers = $payload['headers'] ?? [];
