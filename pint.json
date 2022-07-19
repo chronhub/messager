@@ -7,6 +7,11 @@
     "method_chaining_indentation" : true,
     "no_unused_imports" : true,
     "phpdoc_align" : true,
+    "unary_operator_spaces" : true,
+    "trailing_comma_in_multiline" : true,
+    "blank_line_before_statement": {
+      "statements" : ["break", "continue", "declare", "return", "throw", "try"]
+    },
     "binary_operator_spaces" : {"operators": {"=>": "align_single_space_minimal"}},
     "method_argument_space" : {"on_multiline" : "ignore", "keep_multiple_spaces_after_comma" : false},
     "global_namespace_import" : {

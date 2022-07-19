@@ -84,6 +84,7 @@ final class HasReporterTest extends UnitTestCase
         $stopPropagation = new CallableMessageSubscriber(Reporter::DISPATCH_EVENT,
             function (ContextualMessage $context): void {
                 $context->stopPropagation(true);
+
                 throw new RuntimeException('some_message');
             }, 1);
 
