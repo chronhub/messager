@@ -17,14 +17,14 @@ use function method_exists;
 
 final class ReporterRouter implements Router
 {
-    public function __construct(private array $map,
-                                private MessageAlias $messageAlias,
-                                private ?Container $container,
-                                private ?string $callableMethod)
+    public function __construct(private readonly array $map,
+                                private readonly MessageAlias $messageAlias,
+                                private readonly ?Container $container,
+                                private readonly ?string $callableMethod)
     {
     }
 
-    public function route(Message $message): iterable
+    public function route(Message $message): Collection
     {
         return $this
             ->determineMessageHandler($message)

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Tests\Unit\Subscribers;
 
+use Illuminate\Support\Collection;
 use stdClass;
 use Chronhub\Messager\Reporter;
 use Chronhub\Messager\Router\Router;
@@ -43,7 +44,7 @@ final class HandleRouterTest extends TestCaseWithProphecy
     public function it_handle_message_sync(): void
     {
         $this->producer->isSync($this->message)->willReturn(true)->shouldBeCalled();
-        $this->router->route($this->message)->willReturn([function (): void {}])->shouldBeCalled();
+        $this->router->route($this->message)->willReturn(new Collection([function (): void {}]))->shouldBeCalled();
 
         $context = $this->tracker->newContext(Reporter::DISPATCH_EVENT);
         $context->withMessage($this->message);

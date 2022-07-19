@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Tests\Unit\Router;
 
+use Illuminate\Support\Collection;
 use stdclass;
 use Chronhub\Messager\Router\Router;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -29,10 +30,10 @@ final class MultipleHandlerRouterTest extends TestCaseWithProphecy
     {
         $message = new Message(new stdclass());
 
-        $expectedMessageHandlers = [
+        $expectedMessageHandlers = new Collection([
             function (): void {},
             function (): void {},
-        ];
+        ]);
 
         $this->router->route($message)->willReturn($expectedMessageHandlers)->shouldBeCalled();
 
@@ -50,7 +51,7 @@ final class MultipleHandlerRouterTest extends TestCaseWithProphecy
     {
         $message = new Message(new stdclass());
 
-        $expectedMessageHandlers = [];
+        $expectedMessageHandlers = new Collection();
 
         $this->router->route($message)->willReturn($expectedMessageHandlers)->shouldBeCalled();
 

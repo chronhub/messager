@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Tests\Unit\Router;
 
+use Illuminate\Support\Collection;
 use stdclass;
 use Generator;
 use Chronhub\Messager\Router\Router;
@@ -31,7 +32,7 @@ final class SingleHandlerRouterTest extends TestCaseWithProphecy
     {
         $message = new Message(new stdclass());
 
-        $expectedMessageHandlers = [function (): void {}];
+        $expectedMessageHandlers = new Collection([function (): void {}]);
 
         $this->router->route($message)->willReturn($expectedMessageHandlers)->shouldBeCalled();
 
@@ -53,7 +54,7 @@ final class SingleHandlerRouterTest extends TestCaseWithProphecy
 
         $message = new Message(new stdclass());
 
-        $this->router->route($message)->willReturn($messageHandlers)->shouldBeCalled();
+        $this->router->route($message)->willReturn(new Collection($messageHandlers))->shouldBeCalled();
 
         $router = new SingleHandlerRouter($this->router->reveal());
         $router->route($message);
