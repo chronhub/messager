@@ -13,13 +13,16 @@ use Illuminate\Contracts\Validation\Factory;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Message\ValidationMessage;
 use Chronhub\Messager\Tracker\ContextualMessage;
+use Chronhub\Messager\Exceptions\ReporterException;
 use Chronhub\Messager\Message\PreValidationMessage;
-use Chronhub\Messager\Exceptions\ReportingMessageFailed;
+use Chronhub\Messager\Support\UntrackSubscribedMessage;
 use Chronhub\Messager\Exceptions\ValidationMessageFailed;
 
-final class ValidateCommand extends AbstractMessageSubscriber
+final class ValidateCommand implements MessageSubscriber
 {
-    public function __construct(private Factory $validator)
+    use UntrackSubscribedMessage;
+
+    public function __construct(private readonly Factory $validator)
     {
     }
 
@@ -47,7 +50,7 @@ final class ValidateCommand extends AbstractMessageSubscriber
         $alreadyProducedAsync = $event->header(Header::ASYNC_MARKER->value);
 
         if (null === $alreadyProducedAsync) {
-            throw ReportingMessageFailed::missingAsyncMarkerHeader($message->header(Header::EVENT_TYPE->value));
+            throw ReporterException::missingAsyncMarkerHeader($message->header(Header::EVENT_TYPE->value));
         }
 
         if ($event instanceof PreValidationMessage && $alreadyProducedAsync) {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Chronhub\Messager\Subscribers;
+namespace Chronhub\Messager\Support;
 
 use Chronhub\Messager\Tracker\Listener;
 use Chronhub\Messager\Tracker\MessageTracker;
 
-abstract class AbstractMessageSubscriber implements MessageSubscriber
+trait UntrackSubscribedMessage
 {
     /**
      * @var Listener[]

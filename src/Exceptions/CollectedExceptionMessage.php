@@ -6,7 +6,7 @@ namespace Chronhub\Messager\Exceptions;
 
 use Throwable;
 
-class CollectedExceptionMessage extends ReportingMessageFailed
+class CollectedExceptionMessage extends ReporterException
 {
     private array $exceptions = [];
 

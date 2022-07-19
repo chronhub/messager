@@ -11,7 +11,7 @@ use Chronhub\Messager\Router\ReporterRouter;
 use Chronhub\Messager\Tests\Double\SomeCommand;
 use Chronhub\Messager\Message\Alias\MessageAlias;
 use Chronhub\Messager\Tests\TestCaseWithProphecy;
-use Chronhub\Messager\Exceptions\ReportingMessageFailed;
+use Chronhub\Messager\Exceptions\ReporterException;
 
 final class RouterTest extends TestCaseWithProphecy
 {
@@ -93,7 +93,7 @@ final class RouterTest extends TestCaseWithProphecy
      */
     public function it_raise_exception_if_message_name_not_found_in_map(): void
     {
-        $this->expectException(ReportingMessageFailed::class);
+        $this->expectException(ReporterException::class);
         $this->expectExceptionMessage('Message name some-command not found in map');
 
         $message = new Message(SomeCommand::fromContent(['name' => 'steph']));
@@ -112,7 +112,7 @@ final class RouterTest extends TestCaseWithProphecy
      */
     public function it_raise_exception_if_message_handler_is_not_callable(): void
     {
-        $this->expectException(ReportingMessageFailed::class);
+        $this->expectException(ReporterException::class);
         $this->expectExceptionMessage('Message handler type not supported');
 
         $message = new Message(SomeCommand::fromContent(['name' => 'steph']));
@@ -139,7 +139,7 @@ final class RouterTest extends TestCaseWithProphecy
      */
     public function it_raise_exception_if_string_message_handler_and_no_container(): void
     {
-        $this->expectException(ReportingMessageFailed::class);
+        $this->expectException(ReporterException::class);
         $this->expectExceptionMessage('Container is required for string message handler message_handler_not_found');
 
         $message = new Message(SomeCommand::fromContent(['name' => 'steph']));

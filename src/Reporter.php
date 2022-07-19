@@ -21,5 +21,8 @@ interface Reporter
 
     public function subscribe(MessageSubscriber ...$messageSubscribers): void;
 
+    /**
+     * @return string fully qualified class name or service id
+     */
     public function name(): string;
 }

@@ -8,7 +8,7 @@ use Chronhub\Messager\Message\DomainEvent;
 
 abstract class AggregateChanged extends DomainEvent
 {
-    private ?string $aggregateId;
+    private readonly ?string $aggregateId;
 
     public static function occur(string $aggregateId, array $content): static
     {

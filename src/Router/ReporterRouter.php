@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use Chronhub\Messager\Message\Message;
 use Illuminate\Contracts\Container\Container;
 use Chronhub\Messager\Message\Alias\MessageAlias;
-use Chronhub\Messager\Exceptions\ReportingMessageFailed;
+use Chronhub\Messager\Exceptions\ReporterException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use function is_string;
 use function is_callable;
@@ -47,7 +47,7 @@ final class ReporterRouter implements Router
             return Closure::fromCallable([$messageHandler, $this->callableMethod]);
         }
 
-        throw ReportingMessageFailed::messageHandlerNotSupported();
+        throw ReporterException::messageHandlerNotSupported();
     }
 
     private function determineMessageHandler(Message $message): Collection
@@ -55,7 +55,7 @@ final class ReporterRouter implements Router
         $messageAlias = $this->messageAlias->instanceToAlias($message->event());
 
         if (null === $messageHandlers = $this->map[$messageAlias] ?? null) {
-            throw ReportingMessageFailed::messageNameNotFound($messageAlias);
+            throw ReporterException::messageNameNotFound($messageAlias);
         }
 
         return (new Collection())->wrap($messageHandlers);
@@ -67,7 +67,7 @@ final class ReporterRouter implements Router
     private function locateStringMessageHandler(string $messageHandler): object
     {
         if (! $this->container) {
-            throw ReportingMessageFailed::missingContainer($messageHandler);
+            throw ReporterException::missingContainer($messageHandler);
         }
 
         return $this->container->make($messageHandler);

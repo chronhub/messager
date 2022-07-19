@@ -8,7 +8,7 @@ use Chronhub\Messager\Message\Message;
 use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Contracts\Validation\Validator;
 
-class ValidationMessageFailed extends ReportingMessageFailed
+class ValidationMessageFailed extends ReporterException
 {
     private static ?Validator $validator;
 

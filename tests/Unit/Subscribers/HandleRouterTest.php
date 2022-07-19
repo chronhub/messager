@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Tests\Unit\Subscribers;
 
-use Illuminate\Support\Collection;
 use stdClass;
 use Chronhub\Messager\Reporter;
+use Illuminate\Support\Collection;
 use Chronhub\Messager\Router\Router;
 use Chronhub\Messager\Message\Header;
 use Prophecy\Prophecy\ObjectProphecy;

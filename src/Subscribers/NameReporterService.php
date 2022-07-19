@@ -9,10 +9,13 @@ use Chronhub\Messager\Message\Header;
 use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
+use Chronhub\Messager\Support\UntrackSubscribedMessage;
 
-final class NameReporterService extends AbstractMessageSubscriber
+final class NameReporterService implements MessageSubscriber
 {
-    public function __construct(private string $reporterServiceName)
+    use UntrackSubscribedMessage;
+
+    public function __construct(private readonly string $reporterServiceName)
     {
     }
 

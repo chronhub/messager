@@ -11,7 +11,7 @@ use Chronhub\Messager\Exceptions\RuntimeException;
 
 abstract class ProduceMessage implements MessageProducer
 {
-    public function __construct(protected MessageQueue $queueProducer)
+    public function __construct(private readonly MessageQueue $queueProducer)
     {
     }
 
@@ -31,7 +31,10 @@ abstract class ProduceMessage implements MessageProducer
         }
 
         if (null === $message->header(Header::ASYNC_MARKER->value)) {
-            throw new RuntimeException('Async marker header is required to produce message sync/async for event'.$message->event()::class);
+            $exceptionMessage = 'Async marker header is required to produce ';
+            $exceptionMessage .= 'message sync/async for event '.$message->event()::class;
+
+            throw new RuntimeException($exceptionMessage);
         }
 
         if ($this->isAlreadyProducedAsync($message)) {

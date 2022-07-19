@@ -12,11 +12,14 @@ use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Alias\MessageAlias;
 use Chronhub\Messager\Exceptions\UnauthorizedException;
+use Chronhub\Messager\Support\UntrackSubscribedMessage;
 
-final class GuardCommandRoute extends AbstractMessageSubscriber
+final class GuardCommandRoute implements MessageSubscriber
 {
-    public function __construct(private AuthorizeMessage $authorizationService,
-                                private MessageAlias $messageAlias)
+    use UntrackSubscribedMessage;
+
+    public function __construct(private readonly AuthorizeMessage $authorizationService,
+                                private readonly MessageAlias $messageAlias)
     {
     }
 

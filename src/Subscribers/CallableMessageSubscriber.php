@@ -6,17 +6,20 @@ namespace Chronhub\Messager\Subscribers;
 
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
+use Chronhub\Messager\Support\UntrackSubscribedMessage;
 
-final class CallableMessageSubscriber extends AbstractMessageSubscriber
+final class CallableMessageSubscriber implements MessageSubscriber
 {
+    use UntrackSubscribedMessage;
+
     /**
      * @var callable
      */
     private $callback;
 
-    public function __construct(private string $event,
+    public function __construct(private readonly string $event,
                                 callable $callback,
-                                private int $priority = 1)
+                                private readonly int $priority = 1)
     {
         $this->callback = $callback;
     }

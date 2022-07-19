@@ -11,10 +11,10 @@ use Chronhub\Messager\Message\Serializer\MessageSerializer;
 
 final class IlluminateQueue implements MessageQueue
 {
-    public function __construct(private QueueingDispatcher $queueingDispatcher,
-                                private MessageSerializer $messageSerializer,
-                                private ?string $connection = null,
-                                private ?string $queue = null)
+    public function __construct(private readonly QueueingDispatcher $queueingDispatcher,
+                                private readonly MessageSerializer $messageSerializer,
+                                private readonly ?string $connection = null,
+                                private readonly ?string $queue = null)
     {
     }
 

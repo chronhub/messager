@@ -9,7 +9,7 @@ use function class_exists;
 
 final class AliasFromMap
 {
-    public function __construct(private array $map)
+    public function __construct(private readonly array $map)
     {
     }
 

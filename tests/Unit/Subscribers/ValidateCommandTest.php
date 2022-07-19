@@ -17,7 +17,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Chronhub\Messager\Tests\Double\SomeCommand;
 use Chronhub\Messager\Tests\TestCaseWithProphecy;
 use Chronhub\Messager\Subscribers\ValidateCommand;
-use Chronhub\Messager\Exceptions\ReportingMessageFailed;
+use Chronhub\Messager\Exceptions\ReporterException;
 use Chronhub\Messager\Exceptions\ValidationMessageFailed;
 use Chronhub\Messager\Tests\Double\SomeCommandToValidate;
 use Chronhub\Messager\Tests\Double\SomeCommandToPreValidate;
@@ -68,7 +68,7 @@ final class ValidateCommandTest extends TestCaseWithProphecy
      */
     public function it_raise_exception_if_async_marker_missing_in_headers(): void
     {
-        $this->expectException(ReportingMessageFailed::class);
+        $this->expectException(ReporterException::class);
         $this->expectExceptionMessage('Missing async marker for event some-command-to-validate');
 
         $message = new Message(

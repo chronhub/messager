@@ -13,13 +13,12 @@ use Chronhub\Messager\Subscribers\HandleRouter;
 use Illuminate\Contracts\Bus\QueueingDispatcher;
 use Chronhub\Messager\Message\Alias\MessageAlias;
 use Chronhub\Messager\Router\SingleHandlerRouter;
+use Chronhub\Messager\Exceptions\ReporterException;
 use Chronhub\Messager\Router\MultipleHandlerRouter;
 use Chronhub\Messager\Subscribers\MessageSubscriber;
 use Chronhub\Messager\Subscribers\NameReporterService;
 use Chronhub\Messager\Message\Producer\IlluminateQueue;
 use Chronhub\Messager\Message\Producer\MessageProducer;
-use Chronhub\Messager\Exceptions\ReportingMessageFailed;
-use Chronhub\Messager\Exceptions\InvalidArgumentException;
 use Chronhub\Messager\Message\Producer\SyncMessageProducer;
 use Chronhub\Messager\Message\Serializer\MessageSerializer;
 use Chronhub\Messager\Message\Decorator\ChainMessageDecorators;
@@ -36,7 +35,7 @@ final class DefaultMessagerManager implements MessagerManager
      */
     private array $customMessager = [];
 
-    public function __construct(private Container $container,
+    public function __construct(private readonly Container $container,
                                 private ?array $config = null)
     {
         $this->config ??= $container->get(Repository::class)->get('messager');
@@ -53,7 +52,7 @@ final class DefaultMessagerManager implements MessagerManager
         $config = $this->fromMessager("reporting.$type.$driver");
 
         if (! is_array($config) || empty($config)) {
-            throw new ReportingMessageFailed("Invalid messager configuration with $driver driver and $type type");
+            throw ReporterException::invalidMessagerConfiguration($driver, $type);
         }
 
         return $this->createMessager($type, $config);
@@ -117,7 +116,7 @@ final class DefaultMessagerManager implements MessagerManager
         $messagerRouter = match ($type) {
             'command', 'query' => new SingleHandlerRouter($router),
             'event' => new MultipleHandlerRouter($router),
-            default => throw new InvalidArgumentException("Invalid message type $type")
+            default => throw ReporterException::invalidMessagerType($type)
         };
 
         $messageProducer = $this->createMessageProducer($type, $config['messaging']['producer'] ?? null);
@@ -146,17 +145,17 @@ final class DefaultMessagerManager implements MessagerManager
 
     private function messagerInstance(string $type, array $config): Reporter
     {
-        if (null === $concrete = $config['concrete'] ?? null) {
+        if (null === $concrete = ($config['concrete'] ?? null)) {
             $concrete = match ($type) {
                 'command' => ReportCommand::class,
                 'event'   => ReportEvent::class,
                 'query'   => ReportQuery::class,
-                default   => throw new InvalidArgumentException("Invalid message type $type")
+                default   => throw ReporterException::invalidMessagerType($type)
             };
         }
 
         if (! is_subclass_of($concrete, Reporter::class)) {
-            throw new ReportingMessageFailed("Invalid messager class name $concrete");
+            throw ReporterException::invalidReporterInstance($concrete);
         }
 
         if (is_string($tracker = $config['tracker_id'] ?? null)) {
@@ -179,7 +178,7 @@ final class DefaultMessagerManager implements MessagerManager
         $config = $this->fromMessager("messaging.producer.$strategy");
 
         if (! is_array($config) || empty($config)) {
-            throw new ReportingMessageFailed("Invalid message producer config for strategy $strategy");
+            throw ReporterException::invalidMessageProducerConfiguration($strategy);
         }
 
         $producer = $config['service'];
@@ -209,7 +208,7 @@ final class DefaultMessagerManager implements MessagerManager
     private function determineMessagerKey(string $driver, string $type): string
     {
         if (null === DomainType::tryFrom($type)) {
-            throw new ReportingMessageFailed("Messager type $type is invalid");
+            throw ReporterException::invalidMessagerType('invalid type');
         }
 
         return $type.':'.$driver;

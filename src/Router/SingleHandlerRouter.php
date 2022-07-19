@@ -6,7 +6,7 @@ namespace Chronhub\Messager\Router;
 
 use Illuminate\Support\Collection;
 use Chronhub\Messager\Message\Message;
-use Chronhub\Messager\Exceptions\ReportingMessageFailed;
+use Chronhub\Messager\Exceptions\ReporterException;
 
 final class SingleHandlerRouter implements Router
 {
@@ -19,7 +19,7 @@ final class SingleHandlerRouter implements Router
         $messageHandlers = $this->router->route($message);
 
         if (1 !== $messageHandlers->count()) {
-            throw ReportingMessageFailed::oneMessageHandlerOnly();
+            throw ReporterException::oneMessageHandlerOnly();
         }
 
         return $messageHandlers;

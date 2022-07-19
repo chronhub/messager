@@ -20,8 +20,8 @@ final class GenericMessageSerializer implements MessageSerializer
 {
     private GenericContentSerializer $contentSerializer;
 
-    public function __construct(private Clock $clock,
-                                private UuidGenerator $uuidGenerator)
+    public function __construct(private readonly Clock $clock,
+                                private readonly UuidGenerator $uuidGenerator)
     {
         $this->contentSerializer = new GenericContentSerializer();
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Exceptions;
 
-class MessageNotHandled extends ReportingMessageFailed
+class MessageNotHandled extends ReporterException
 {
     public static function withMessageName(string $message): self
     {

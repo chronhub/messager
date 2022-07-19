@@ -10,7 +10,7 @@ use function is_array;
 
 final class GenericMessageFactory implements MessageFactory
 {
-    public function __construct(private MessageSerializer $serializer)
+    public function __construct(private readonly MessageSerializer $serializer)
     {
     }
 

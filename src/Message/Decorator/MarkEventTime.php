@@ -10,7 +10,7 @@ use Chronhub\Messager\Support\Clock\Clock;
 
 final class MarkEventTime implements MessageDecorator
 {
-    public function __construct(private Clock $clock)
+    public function __construct(private readonly Clock $clock)
     {
     }
 

@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Exceptions;
 
-class UnauthorizedException extends ReportingMessageFailed
+class UnauthorizedException extends ReporterException
 {
 }

@@ -8,9 +8,12 @@ use Chronhub\Messager\Reporter;
 use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
+use Chronhub\Messager\Support\UntrackSubscribedMessage;
 
-final class HandleEvent extends AbstractMessageSubscriber
+final class HandleEvent implements MessageSubscriber
 {
+    use UntrackSubscribedMessage;
+
     public function attachToTracker(MessageTracker $tracker): void
     {
         $this->listeners[] = $tracker->listen(Reporter::DISPATCH_EVENT, function (ContextualMessage $context): void {

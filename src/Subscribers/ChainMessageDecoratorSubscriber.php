@@ -8,11 +8,14 @@ use Chronhub\Messager\Reporter;
 use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
+use Chronhub\Messager\Support\UntrackSubscribedMessage;
 use Chronhub\Messager\Message\Decorator\MessageDecorator;
 
-final class ChainMessageDecoratorSubscriber extends AbstractMessageSubscriber
+final class ChainMessageDecoratorSubscriber implements MessageSubscriber
 {
-    public function __construct(private MessageDecorator $messageDecorator)
+    use UntrackSubscribedMessage;
+
+    public function __construct(private readonly MessageDecorator $messageDecorator)
     {
     }
 

@@ -8,7 +8,7 @@ use Chronhub\Messager\Message\Message;
 
 final class ChainMessageDecorators implements MessageDecorator
 {
-    private array $messageDecorators;
+    private readonly array $messageDecorators;
 
     public function __construct(MessageDecorator ...$messageDecorators)
     {

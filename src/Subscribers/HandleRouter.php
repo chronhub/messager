@@ -10,11 +10,14 @@ use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
 use Chronhub\Messager\Message\Producer\MessageProducer;
+use Chronhub\Messager\Support\UntrackSubscribedMessage;
 
-final class HandleRouter extends AbstractMessageSubscriber
+final class HandleRouter implements MessageSubscriber
 {
-    public function __construct(private Router $router,
-                                private MessageProducer $messageProducer)
+    use UntrackSubscribedMessage;
+
+    public function __construct(private readonly Router $router,
+                                private readonly MessageProducer $messageProducer)
     {
     }
 

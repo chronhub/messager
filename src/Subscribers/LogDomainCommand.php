@@ -11,15 +11,18 @@ use Chronhub\Messager\Message\Message;
 use Chronhub\Messager\OnDispatchPriority;
 use Chronhub\Messager\Tracker\MessageTracker;
 use Chronhub\Messager\Tracker\ContextualMessage;
+use Chronhub\Messager\Support\UntrackSubscribedMessage;
 use Chronhub\Messager\Message\Serializer\MessageSerializer;
 use function is_array;
 use function serialize;
 use function iterator_count;
 
-final class LogDomainCommand extends AbstractMessageSubscriber
+final class LogDomainCommand implements MessageSubscriber
 {
-    public function __construct(private LoggerInterface $logger,
-                                private MessageSerializer $messageSerializer)
+    use UntrackSubscribedMessage;
+
+    public function __construct(private readonly LoggerInterface $logger,
+                                private readonly MessageSerializer $messageSerializer)
     {
     }
 

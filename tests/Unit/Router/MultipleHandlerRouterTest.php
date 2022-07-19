@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Tests\Unit\Router;
 
-use Illuminate\Support\Collection;
 use stdclass;
+use Illuminate\Support\Collection;
 use Chronhub\Messager\Router\Router;
 use Prophecy\Prophecy\ObjectProphecy;
 use Chronhub\Messager\Message\Message;

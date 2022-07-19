@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Chronhub\Messager\Tests\Unit\Router;
 
-use Illuminate\Support\Collection;
 use stdclass;
 use Generator;
+use Illuminate\Support\Collection;
 use Chronhub\Messager\Router\Router;
 use Prophecy\Prophecy\ObjectProphecy;
 use Chronhub\Messager\Message\Message;
 use Chronhub\Messager\Router\SingleHandlerRouter;
 use Chronhub\Messager\Tests\TestCaseWithProphecy;
-use Chronhub\Messager\Exceptions\ReportingMessageFailed;
+use Chronhub\Messager\Exceptions\ReporterException;
 
 final class SingleHandlerRouterTest extends TestCaseWithProphecy
 {
@@ -49,7 +49,7 @@ final class SingleHandlerRouterTest extends TestCaseWithProphecy
      */
     public function it_raise_exception_with_invalid_count_message_handlers(array $messageHandlers): void
     {
-        $this->expectException(ReportingMessageFailed::class);
+        $this->expectException(ReporterException::class);
         $this->expectExceptionMessage('Router require one message handler only');
 
         $message = new Message(new stdclass());
